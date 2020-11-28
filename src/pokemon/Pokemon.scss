@@ -1,0 +1,178 @@
+@font-face { font-family: PKMN ; src: url('./assets/PKMN RBYGSC.ttf'); } 
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: black;
+}
+
+$catchPositionY: 120px;
+$catchPositionX: 225px;
+
+.canvas {
+  width: 300px;
+  height: 300px;
+  margin: 0;
+  display: flex;
+  position: relative;
+}
+
+.innerBase {
+  position: relative;
+  top: 80%;
+  left: 10%;
+  opacity: 0;
+}
+
+.throw {
+  position: relative;
+  top: 70%;
+  left: 10%;
+  animation: throw 1.2s forwards 1;
+  z-index: 1;
+}
+
+.PokeSmoke {
+  position: relative;
+  top: $catchPositionY - 32px;
+  left: $catchPositionX - 32px;
+  animation: empty 0.7s;
+  z-index: 1;
+}
+
+.PokeSmokeOut {
+  position: relative;
+  top: $catchPositionY - 32px;
+  left: $catchPositionX - 32px;
+  animation: emptyOut 0.7s;
+  z-index: 1;
+}
+
+.PokeCaught {
+  position: relative;
+  top: $catchPositionY;
+  left: $catchPositionX;
+  animation: empty 8s;
+  z-index: 1;
+}
+
+.PokeThreeShakes {
+  position: relative;
+  top: $catchPositionY;
+  left: $catchPositionX;
+  animation: empty 6s;
+  z-index: 1;
+}
+
+.PokeTwoShakes {
+  position: relative;
+  top: $catchPositionY;
+  left: $catchPositionX;
+  animation: empty 4.5s;
+  z-index: 1;
+}
+
+.PokeOneShake {
+  position: relative;
+  top: $catchPositionY;
+  left: $catchPositionX;
+  animation: empty 3.5s;
+  z-index: 1;
+}
+
+.PokeNoShake {
+  position: relative;
+  top: $catchPositionY;
+  left: $catchPositionX;
+  animation: empty 2s;
+  z-index: 1;
+}
+
+.emptyTime {
+  animation: empty 1.5s;
+}
+
+.postSmoke {
+  animation: empty 1s;
+}
+
+.failedCatch {
+  animation: empty 2.5s;
+}
+
+.pokemonWrapper {
+  position: absolute;
+  top: $catchPositionY - 32px;
+  left: $catchPositionX - 32px;
+  margin-left: 2px;
+  margin-top: 1px;
+  width: 1px;
+  height: 1px;
+  text-align: center;
+  z-index: 0;
+}
+
+.pokeFadeIn {
+  animation: pokemonFadeIn 2s forwards; 
+  // backface-visibility: hidden;
+  // transform: translateZ(0) scale(1, 1);
+}
+
+.pokeFadeOut {
+  animation: pokemonFadeOut 2s forwards;
+}
+
+.pokemonText {
+  position: relative;
+  left: 92px;
+  bottom: 40px;
+  font-family: PKMN;
+  padding: 14px;
+  border-radius: 20px;
+  max-width: 600px;
+  background-color: white;
+}
+
+@keyframes empty {
+  from {}
+  to {}
+}
+
+@keyframes emptyOut {
+  from {}
+  to {}
+}
+
+@keyframes pokemonFadeIn {
+  0% {opacity: 0}
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes pokemonFadeOut {
+  0% {opacity: 1}
+  50% {opacity: 0}
+  100% {opacity: 0}
+}
+
+@keyframes throw {
+  0% {
+    opacity: 1;
+  }
+  30%, 32% {
+    top: 20%;
+  }
+  85% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 0;
+  }
+  100% {
+    top: $catchPositionY + 5px;
+    left: $catchPositionX + 5px;
+    opacity: 0;
+  }
+}

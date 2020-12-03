@@ -14,9 +14,6 @@ import PokeSmoke from './assets/PokeSmoke.gif';
 const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttempt, setCatchAttempt, animationTrigger, setAnimationTrigger, currUser}) => {
   const [currImg, setCurrImg] = React.useState('')
   const [wrapperClass, setWrapperClass] = React.useState('');
-  // const [imgIncrement, setImgIncrement] = React.useState(0);
-  // const [pokemon, setPokemon] = React.useState('');
-  // const [catchAttempt, setCatchAttempt] = React.useState(0);
   const [pokemonClass, setPokemonClass] = React.useState('pokemon');
   const [pokemonVis, setPokemonVis] = React.useState(false);
   const [pokemonText, setPokemonText] = React.useState('');
@@ -25,10 +22,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
     if (catchAttempt === 5) setImgIncrement(51);
   }
 
-  
-
-  React.useEffect(() => {
-    
+  React.useEffect(() => { 
     switch (imgIncrement) {
       // Thrown pokeball animation
       case 0:
@@ -61,7 +55,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setCurrImg(Pokeball);
         setWrapperClass("throw");
         setPokemonVis(true);
-        setPokemonText(`${currUser.toUpperCase()} threw a POKé BALL`);
+        setPokemonText(`${currUser.toUpperCase().substring(0, 16)} threw a POKé BALL`);
         break;
       case 3:
       case 13:
@@ -89,7 +83,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 6:
         setCurrImg(PokeCaught);
         setWrapperClass("PokeCaught");
-        setPokemonText(`Gotcha! ${currUser.toUpperCase()} caught a ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
+        setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught a ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
         break;
       case 7:

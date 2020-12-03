@@ -4,20 +4,28 @@ import Pokemon from './pokemon/Pokemon';
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001";
 
+const socket = socketIOClient(ENDPOINT);
+
 function App() {
-  // const [response, setResponse] = React.useState('');
   const [imgIncrement, setImgIncrement] = React.useState(0);
   const [pokemon, setPokemon] = React.useState('');
   const [catchAttempt, setCatchAttempt] = React.useState(0);
   const [animationTrigger, setAnimationTrigger] = React.useState(0);
   const [currUser, setCurrUser] = React.useState('');
+  
+  const receiveBall = (data) => {
+    setCurrUser(data);
+    setAnimationTrigger(1);
+  }
+
+  socket.on("PokeballReceive", data => receiveBall(data));
+
   React.useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("PokeballReceive", data => {
-      setCurrUser(data);
-      setAnimationTrigger(1);
-    })
-  }, [])
+    if (imgIncrement === 6) {
+      var emitObject = {...pokemon, user: currUser}
+      socket.emit('pokemonCaught', emitObject);
+    }
+  }, [imgIncrement, pokemon, currUser]);
   
   return (
     <div>

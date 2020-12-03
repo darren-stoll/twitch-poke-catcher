@@ -12,7 +12,13 @@ const client = new tmi.Client({
   },
   channels: ['doicm']
 });
-client.connect();
+client.connect()
+  .then(() => {
+    console.log("Client connected")
+  })
+  .catch(err => {
+    console.log("Error: ", err);
+  });
 
 const twitchbot = socket => {
   var lastTime = 0;

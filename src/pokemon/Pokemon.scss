@@ -2,9 +2,10 @@
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
   background-color: black;
+  width: 500px;
 }
 
 $catchPositionY: 120px;
@@ -125,13 +126,14 @@ $catchPositionX: 225px;
 
 .pokemonText {
   position: relative;
-  left: 92px;
+  right: 36px;
   bottom: 40px;
   font-family: PKMN;
   padding: 14px;
   border-radius: 20px;
-  max-width: 600px;
+  max-width: 420px;
   background-color: white;
+  text-align: right;
 }
 
 @keyframes empty {

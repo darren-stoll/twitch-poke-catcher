@@ -20,12 +20,21 @@ client.connect()
     console.log("Error: ", err);
   });
 
-const twitchbot = socket => {
+const twitchbot = (socket, pastebin) => {
   var lastTime = 0;
   var cooldown = 20000;
-  client.on('message', (channel, tags, message, self) => {
+  client.on('message', async (channel, tags, message, self) => {
     if (self) return;
+
+    // !list command - creates a pastebin with that user's list of pokemon
+    if (message.toLowerCase() === "!list") {
+      var pasteURL = await pastebin('yo howdy');
+      console.log(pasteURL);
+      // client.say(channel, pasteURL)
+
+    }
     
+    // !pokemon command - throws a pokeball
     if (message.toLowerCase() === "!pokemon" && Date.now() - lastTime > cooldown) {
       client.say(channel, `@${tags.username} throws the Poké Ball!`)
       lastTime = Date.now();

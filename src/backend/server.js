@@ -40,7 +40,7 @@ const io = socketIo(server, {
 
 io.on("connection", socket => {
   console.log("Socket connected");
-  twitchbot(socket);
+  twitchbot(socket, pastebin);
   // discordbot(socket); // Comment this out if you don't want the discord bot to listen
   socket.on('pokemonCaught', (data) => {
     console.log(data);
@@ -71,7 +71,5 @@ io.on("connection", socket => {
     console.log("Socket disconnected");
   })
 })
-
-// pastebin('yo howdy');
 
 server.listen(port, () => console.log("Listening on port 4001"));

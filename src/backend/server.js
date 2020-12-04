@@ -40,7 +40,7 @@ const io = socketIo(server, {
 
 io.on("connection", socket => {
   console.log("Socket connected");
-  twitchbot(socket, pastebin);
+  twitchbot(socket);
   // discordbot(socket); // Comment this out if you don't want the discord bot to listen
   socket.on('pokemonCaught', (data) => {
     console.log(data);

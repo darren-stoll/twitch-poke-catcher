@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react'
 import Pokemon from './pokemon/Pokemon';
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4001";
+// import socketIOClient from "socket.io-client";
+// const ENDPOINT = "http://127.0.0.1:4001";
 
-const socket = socketIOClient(ENDPOINT);
+// const socket = socketIOClient(ENDPOINT);
 
 function App() {
   const [imgIncrement, setImgIncrement] = React.useState(0);
@@ -12,20 +12,6 @@ function App() {
   const [catchAttempt, setCatchAttempt] = React.useState(0);
   const [animationTrigger, setAnimationTrigger] = React.useState(0);
   const [currUser, setCurrUser] = React.useState('');
-  
-  const receiveBall = (data) => {
-    setCurrUser(data);
-    setAnimationTrigger(1);
-  }
-
-  socket.on("PokeballReceive", data => receiveBall(data));
-
-  React.useEffect(() => {
-    if (imgIncrement === 6) {
-      var emitObject = {...pokemon, user: currUser}
-      socket.emit('pokemonCaught', emitObject);
-    }
-  }, [imgIncrement, pokemon, currUser]);
   
   return (
     <div>
@@ -39,8 +25,11 @@ function App() {
         animationTrigger = {animationTrigger}
         setAnimationTrigger = {setAnimationTrigger}
         currUser = {currUser}
+        setCurrUser = {setCurrUser}
         />
-      {/* <input type="button" value="Button" onClick={() => setAnimationTrigger(1)} /> */}
+      {/* <input type="button" value="Button" onClick={() => {
+        setAnimationTrigger(1)}
+      } /> */}
     </div>
   );
 }

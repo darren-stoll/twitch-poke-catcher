@@ -8,10 +8,15 @@ import PokeThreeShakes from './assets/PokeThreeShakes.gif';
 import PokeCaught from './assets/PokeCaught.png';
 import PokeSmoke from './assets/PokeSmoke.gif';
 
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://127.0.0.1:4001";
+
+const socket = socketIOClient(ENDPOINT);
+
 
 // Keep a list of pokemon a user has caught
 
-const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttempt, setCatchAttempt, animationTrigger, setAnimationTrigger, currUser}) => {
+const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttempt, setCatchAttempt, animationTrigger, setAnimationTrigger, currUser, setCurrUser}) => {
   const [currImg, setCurrImg] = React.useState('')
   const [wrapperClass, setWrapperClass] = React.useState('');
   const [pokemonClass, setPokemonClass] = React.useState('pokemon');
@@ -22,7 +27,20 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
     if (catchAttempt === 5) setImgIncrement(51);
   }
 
+  React.useEffect(() => {
+    const receiveBall = (data, callback) => {
+      setCurrUser(data);
+      setAnimationTrigger(1);
+      callback({
+        status: 'ok'
+      })
+    }
+    socket.on("PokeballReceive", (data, callback) => receiveBall(data, callback));
+  // eslint-disable-next-line
+  }, [socket]);
+
   React.useEffect(() => { 
+    
     switch (imgIncrement) {
       // Thrown pokeball animation
       case 0:
@@ -83,8 +101,10 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 6:
         setCurrImg(PokeCaught);
         setWrapperClass("PokeCaught");
-        setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught a ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
+        setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
+        var emitObject = {...pokemon, user: currUser}
+        socket.emit('pokemonCaught', emitObject);
         break;
       case 7:
         setCurrImg('');
@@ -210,6 +230,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         var randomPokemonID = Math.floor(Math.random() * (899 - 1) + 1);
         setPokemon(pokeData.pokemon[randomPokemonID - 1]);
         currPokemon = pokeData.pokemon[randomPokemonID - 1]; // Setting another variable to account for setPokemon going async
+        // setPokemon(pokeData.pokemon[9]); // Use this for debugging, since Caterpie is nice and easy to catch relatively
+        // currPokemon = pokeData.pokemon[9];
         setCatchAttempt(1);
       }
       else {

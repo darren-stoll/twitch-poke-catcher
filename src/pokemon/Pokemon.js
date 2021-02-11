@@ -56,14 +56,9 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 41:
         setCurrImg('');
         setPokemonVis(true);
-        if (catchAttempt === 1) {
-          setPokemonText(`A wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} appears`);
-          setPokemonClass("pokeFadeIn");
-        }
-        else {
-          setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
-          setWrapperClass("emptyTime");
-        }
+        setPokemonClass('pokemon');
+        setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
+        setWrapperClass("emptyTime");
         break;
       case 2:
       case 12:
@@ -112,6 +107,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("innerBase");
         setImgIncrement(0);
         setCatchAttempt(0);
+        loadNewPokemon();
         break;
 
       // Thrown pokeball, fails after 3 wobbles
@@ -215,6 +211,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonText('');
         setImgIncrement(0);
         setCatchAttempt(0);
+        loadNewPokemon();
         break;
       // Default
       default:
@@ -223,21 +220,32 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
   // eslint-disable-next-line
   }, [imgIncrement, catchAttempt, pokemon])
 
-  const animationSequence = () => {
+  const loadNewPokemon = async () => {
+    setTimeout(() => {
+      var randomPokemonID = Math.floor(Math.random() * (899 - 1) + 1);
+      setPokemon(pokeData.pokemon[randomPokemonID - 1])
+    }, 2000);
+  }
+
+  React.useEffect(() => {
+    if (pokemon !== '') {
+      setWrapperClass("innerBase");
+      setPokemonVis(true);
+      console.log('pokemon', pokemon);
+      setPokemonText(`A wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} appears`);
+      setTimeout(() => {
+        setPokemonText('')
+      }, 2000);
+      setPokemonClass('pokeFadeIn');
+    }
+  }, [pokemon])
+
+  const animationSequence = async () => {
     if (imgIncrement === 0) {
       var currPokemon;
-      if (catchAttempt === 0) {
-        var randomPokemonID = Math.floor(Math.random() * (899 - 1) + 1);
-        setPokemon(pokeData.pokemon[randomPokemonID - 1]);
-        currPokemon = pokeData.pokemon[randomPokemonID - 1]; // Setting another variable to account for setPokemon going async
-        // setPokemon(pokeData.pokemon[9]); // Use this for debugging, since Caterpie is nice and easy to catch relatively
-        // currPokemon = pokeData.pokemon[9];
-        setCatchAttempt(1);
-      }
-      else {
-        setCatchAttempt(catchAttempt + 1);
-        currPokemon = pokemon;
-      }
+      setCatchAttempt(catchAttempt + 1);
+      currPokemon = pokemon;
+
       let capture; 
       let currentThrowOdds = (Math.random() * 256) + 0.000000001;
 
@@ -271,12 +279,17 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
 
   })
 
+  React.useEffect(() => {
+    loadNewPokemon();
+  // eslint-disable-next-line
+  }, [])
+
   return (
     <div className="container">
       <div className="canvas">
         <div className={wrapperClass} onAnimationEnd={() => {
           console.log(imgIncrement);
-          setImgIncrement(imgIncrement + 1)
+          if (pokemonClass !== 'pokeFadeIn') setImgIncrement(imgIncrement + 1)
         }}>
           <img src={currImg} alt={currImg} />
         </div>
@@ -285,7 +298,9 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
             className={pokemonClass} 
             src={pokemonVis && pokemon !== '' ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` : ''} 
             alt={pokemonVis && pokemon !== '' ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` : ''} 
-            onAnimationEnd={() => setImgIncrement(imgIncrement + 1)}
+            onAnimationEnd={() => {
+              if (pokemonClass !== 'pokeFadeIn') setImgIncrement(imgIncrement + 1)
+            }}
             />
         </div>
       </div>

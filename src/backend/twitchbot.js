@@ -22,24 +22,35 @@ client.connect()
 
 const twitchbot = (socket) => {
   var lastTime = 0;
-  var cooldown = 5000;
+  var cooldown = 20000;
+  var listLastTime = 0;
+  var listCooldown = 5000;
+  var faqLastTime = 0;
+  var faqCooldown = 5000;
   client.on('message', async (channel, tags, message, self) => {
     if (self) return;
 
-    // !list command - creates a pastebin with that user's list of pokemon
-    if (message.toLowerCase() === "!list") {
-      // TODO
+    // !faq command for dex
+    if (message.toLowerCase() === "!faq" && Date.now() - faqLastTime > faqCooldown) {
+      client.say(channel, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
+      faqLastTime = Date.now();
     }
+
+    // !list command - creates a pastebin with that user's list of pokemon
+    if (message.toLowerCase() === "!list" && Date.now() - listLastTime > listCooldown) {
+      client.say(channel, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
+      listLastTime = Date.now();
+    } 
     
     // !pokemon command - throws a pokeball
-    if (message.toLowerCase() === "!pokemon" && Date.now() - lastTime > cooldown) {
+    if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
       client.say(channel, `@${tags.username} throws the Poké Ball!`)
       lastTime = Date.now();
       socket.emit("PokeballReceive", tags.username, (response) => {
         console.log(response.status, "PokeballReceive emit received");
       }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
-    } else if (message.toLowerCase() === '!pokemon') {
-      client.say(channel, `Cooldown is active. Please wait ${cooldown - (Date.now() - lastTime)} more milliseconds.`);
+    } else if (message.toLowerCase() === '!throw') {
+      // client.say(channel, `Cooldown is active. Please wait ${cooldown - (Date.now() - lastTime)} more milliseconds.`);
     }
 
   })

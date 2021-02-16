@@ -22,6 +22,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
   const [pokemonClass, setPokemonClass] = React.useState('pokemon');
   const [pokemonVis, setPokemonVis] = React.useState(false);
   const [pokemonText, setPokemonText] = React.useState('');
+  const [timer, setTimer] = React.useState(4);
 
   const freePokemon = () => {
     if (catchAttempt === 5) setImgIncrement(51);
@@ -59,6 +60,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonClass('pokemon');
         setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
         setWrapperClass("emptyTime");
+        setTimer(20);
         break;
       case 2:
       case 12:
@@ -220,6 +222,15 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
   // eslint-disable-next-line
   }, [imgIncrement, catchAttempt, pokemon])
 
+  React.useEffect(() => {
+    if (timer > 0) {
+      // console.log('timer is', timer);
+      setTimeout(() => {
+        setTimer(t => t - 1);
+      }, 1000);
+    }
+  }, [timer])
+
   const loadNewPokemon = async () => {
     setTimeout(() => {
       var randomPokemonID = Math.floor(Math.random() * (899 - 1) + 1);
@@ -307,7 +318,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       {pokemonText !== '' ? <div className="pokemonText">
         {pokemonText}
       </div> : <div style={{height: "46.4px"}}></div>}
-      
+      {timer > 0 ? <div className="timer">Cooldown timer: {timer}</div>
+       : <div className="timer">Ready to !throw</div>}
     </div>
   );
 }

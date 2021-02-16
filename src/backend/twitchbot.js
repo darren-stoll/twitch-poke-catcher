@@ -27,24 +27,35 @@ const twitchbot = (socket) => {
   var listCooldown = 5000;
   var faqLastTime = 0;
   var faqCooldown = 5000;
+  const CHANNEL = "#doicm"
+  socket.on('pokemonCaught', data => {
+    // console.log("Pokemon has been caught!", data);
+    client.say(CHANNEL, `${data.user} caught a ${data.name.toUpperCase()}!`);
+  })
+  
   client.on('message', async (channel, tags, message, self) => {
     if (self) return;
 
+    // if (message.toLowerCase() === "!test") {
+    //   console.log(CHANNEL);
+    //   client.say(CHANNEL, "Test worked");
+    // }
+
     // !faq command for dex
     if (message.toLowerCase() === "!faq" && Date.now() - faqLastTime > faqCooldown) {
-      client.say(channel, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
+      client.say(CHANNEL, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
       faqLastTime = Date.now();
     }
 
     // !list command - creates a pastebin with that user's list of pokemon
     if (message.toLowerCase() === "!list" && Date.now() - listLastTime > listCooldown) {
-      client.say(channel, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
+      client.say(CHANNEL, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
       listLastTime = Date.now();
     } 
     
     // !pokemon command - throws a pokeball
     if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
-      client.say(channel, `@${tags.username} throws the Poké Ball!`)
+      // client.say(channel, `@${tags.username} throws the Poké Ball!`)
       lastTime = Date.now();
       socket.emit("PokeballReceive", tags.username, (response) => {
         console.log(response.status, "PokeballReceive emit received");

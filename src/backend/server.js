@@ -3,6 +3,7 @@ const http = require("http");
 const socketIo = require('socket.io');
 const twitchbot = require('./twitchbot');
 const mongoose = require('mongoose');
+const axios = require('axios');
 
 const port = 4001;
 const app = express();
@@ -29,6 +30,32 @@ var trainerSchema = new mongoose.Schema({
 
 const Trainer = mongoose.model("Trainer", trainerSchema);
 
+const clientId = process.env.CLIENT_ID;
+const accessToken = process.env.ACCESS_TOKEN;
+const broadcasterId = process.env.BROADCASTER_ID;
+
+const greatBallId = process.env.GREAT_BALL;
+
+const cooldownHeaders = {
+  'client-id': clientId,
+  'Authorization': `Bearer ${accessToken}`
+}
+
+const enableRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=false`;
+const disableRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=true`;
+
+const configGBConnect = {
+  method: 'patch',
+  url: enableRedemptionGBUrl,
+  headers: cooldownHeaders
+}
+
+const configGBDisconnect = {
+  method: 'patch',
+  url: disableRedemptionGBUrl,
+  headers: cooldownHeaders
+}
+
 const server = http.createServer(app);
 
 const io = socketIo(server, {
@@ -40,6 +67,13 @@ const io = socketIo(server, {
 
 io.on("connection", socket => {
   console.log("Socket connected");
+  axios(configGBConnect)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   socket.removeAllListeners();
   twitchbot(socket);
   // discordbot(socket); // Comment this out if you don't want the discord bot to listen
@@ -71,6 +105,13 @@ io.on("connection", socket => {
   })
   
   socket.on("disconnect", () => {
+  axios(configGBDisconnect)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     console.log("Socket disconnected");
   })
 })

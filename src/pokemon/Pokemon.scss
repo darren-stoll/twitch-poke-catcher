@@ -139,7 +139,8 @@ $catchPositionX: 225px;
 .timer {
   font-family: PKMN;
   font-size: 10pt;
-  color: #a0a0a0;
+  color: white;
+  -webkit-text-stroke: 1px #303030;
 }
 
 @keyframes empty {

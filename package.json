@@ -10,7 +10,7 @@
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.1",
+    "mongoose": "^5.12.2",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -18,7 +18,10 @@
     "react-spring": "^8.0.27",
     "socket.io": "^3.0.1",
     "socket.io-client": "^3.0.1",
-    "tmi.js": "^1.5.0",
+    "tmi.js": "^1.7.5",
+    "twitch": "^4.5.2",
+    "twitch-auth": "^4.5.2",
+    "twitch-pubsub-client": "^4.5.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

@@ -1,5 +1,36 @@
 const tmi = require('tmi.js');
+const { ApiClient } = require('twitch');
+const { StaticAuthProvider } = require('twitch-auth');
+const { PubSubClient } = require('twitch-pubsub-client');
+const axios = require('axios');
+
 require('dotenv').config();
+
+const clientId = process.env.CLIENT_ID;
+const accessToken = process.env.ACCESS_TOKEN;
+const broadcasterId = process.env.BROADCASTER_ID;
+
+const greatBallId = process.env.GREAT_BALL;
+
+const cooldownHeaders = {
+  'client-id': clientId,
+  'Authorization': `Bearer ${accessToken}`
+}
+
+const cooldownStartRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=true`;
+const cooldownEndRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=false`;
+
+const configGBCooldownStart = {
+  method: 'patch',
+  url: cooldownStartRedemptionGBUrl,
+  headers: cooldownHeaders
+}
+
+const configGBCooldownEnd = {
+  method: 'patch',
+  url: cooldownEndRedemptionGBUrl,
+  headers: cooldownHeaders
+}
 
 const client = tmi.Client({
   options: { debug: true },
@@ -12,6 +43,7 @@ const client = tmi.Client({
   },
   channels: ['doicm']
 });
+
 client.connect()
   .then(() => {
     console.log("Client connected")
@@ -20,55 +52,99 @@ client.connect()
     console.log("Error: ", err);
   });
 
-const twitchbot = (socket) => {
-  var lastTime = 0;
-  var cooldown = 20000;
-  var listLastTime = 0;
-  var listCooldown = 5000;
-  var faqLastTime = 0;
-  var faqCooldown = 5000;
-  const CHANNEL = "#doicm"
-  socket.on('pokemonCaught', data => {
-    // console.log("Pokemon has been caught!", data);
-    client.say(CHANNEL, `${data.user} caught a ${data.name.toUpperCase()}!`);
-  })
+const cooldownBalls = () => {
+  axios(configGBCooldownStart)
+    .then(() => {
+      console.log("cooldown start");
+      setTimeout(() => axios(configGBCooldownEnd).then(() => console.log('cooldown end')), 20000);
+    });
+}
+
+const twitchbot = async (socket) => {
+  try {
+    var lastTime = 0;
+    var cooldown = 20000;
+    var listLastTime = 0;
+    var listCooldown = 5000;
+    var faqLastTime = 0;
+    var faqCooldown = 5000;
+    // var twelvehourLastTime = 0;
+    // var twelvehourCooldown = 10000;
   
-  client.on('message', async (channel, tags, message, self) => {
-    if (self) return;
-
-    // if (message.toLowerCase() === "!test") {
-    //   console.log(CHANNEL);
-    //   client.say(CHANNEL, "Test worked");
-    // }
-
-    // !faq command for dex
-    if (message.toLowerCase() === "!faq" && Date.now() - faqLastTime > faqCooldown) {
-      client.say(CHANNEL, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
-      faqLastTime = Date.now();
-    }
-
-    // !list command - creates a pastebin with that user's list of pokemon
-    if (message.toLowerCase() === "!list" && Date.now() - listLastTime > listCooldown) {
-      client.say(CHANNEL, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
-      listLastTime = Date.now();
-    } 
+    const CHANNEL = "#doicm"
+    const authProvider = new StaticAuthProvider(clientId, accessToken);
+    const apiClient = new ApiClient({ authProvider });
+    const pubSubClient = new PubSubClient();
+    const userID = await pubSubClient.registerUserListener(apiClient);
     
-    // !pokemon command - throws a pokeball
-    if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
-      // client.say(channel, `@${tags.username} throws the Poké Ball!`)
-      lastTime = Date.now();
-      socket.emit("PokeballReceive", tags.username, (response) => {
-        console.log(response.status, "PokeballReceive emit received");
-      }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
-    } else if (message.toLowerCase() === '!throw') {
-      // client.say(channel, `Cooldown is active. Please wait ${cooldown - (Date.now() - lastTime)} more milliseconds.`);
-    }
-
-  })
-
-  client.on('disconnect', () => {
-    console.log("Client disconnected");
-  })
+    await pubSubClient.onRedemption(userID, async msg => {
+      // console.log(msg.rewardId);
+      if (msg.rewardId === greatBallId) {
+        cooldownBalls();
+        lastTime = Date.now();
+        socket.emit("GreatballReceive", msg.userName, (response) => {
+          console.log(response.status, "GreatballReceive emit received");
+        }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
+      }
+      // client.say(CHANNEL, `phil just redeemed ${msg.rewardTitle}`);
+    });
+    
+    socket.on('pokemonCaught', data => {
+      // console.log("Pokemon has been caught!", data);
+      client.say(CHANNEL, `${data.user} caught a ${data.name.toUpperCase()}!`);
+    })
+    
+    client.on('message', async (channel, tags, message, self) => {
+      if (self) return;
+      // console.log(tags["custom-reward-id"]);
+      // if (message.toLowerCase() === "!test") {
+      //   console.log(CHANNEL);
+      //   client.say(CHANNEL, "Test worked");
+      // }
+  
+      // if (message.toLowerCase() === "!12hr" && Date.now() - twelvehourLastTime > twelvehourCooldown) {
+      //   client.say(CHANNEL, "Learning a category to speedrun and then running it in 12 hours. See https://go1den.com/12-hour-challenge/ for more details.");
+      //   twelvehourLastTime = Date.now();
+      // }
+  
+      // if (message.toLowerCase() === "!wsc" && Date.now() - twelvehourLastTime > twelvehourCooldown) {
+      //   client.say(CHANNEL, "Learning a category to speedrun and then running it in 12 hours. See https://go1den.com/12-hour-challenge/ for more details.");
+      //   twelvehourLastTime = Date.now();
+      // }
+  
+      // !faq command for dex
+      if (message.toLowerCase() === "!faq" && Date.now() - faqLastTime > faqCooldown) {
+        client.say(CHANNEL, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
+        faqLastTime = Date.now();
+      }
+  
+      // !list command - creates a pastebin with that user's list of pokemon
+      if (message.toLowerCase() === "!list" && Date.now() - listLastTime > listCooldown) {
+        client.say(CHANNEL, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
+        listLastTime = Date.now();
+      } 
+      
+      // !pokemon command - throws a pokeball
+      if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
+        // client.say(channel, `@${tags.username} throws the Poké Ball!`)
+        lastTime = Date.now();
+        cooldownBalls();
+        socket.emit("PokeballReceive", tags.username, (response) => {
+          console.log(response.status, "PokeballReceive emit received");
+        }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
+      } else if (message.toLowerCase() === '!throw') {
+        // client.say(channel, `Cooldown is active. Please wait ${cooldown - (Date.now() - lastTime)} more milliseconds.`);
+      }
+  
+    })
+  
+    client.on('disconnect', () => {
+      console.log("Client disconnected");
+    })
+  } catch (err) {
+    console.log(err);
+  }
+  
 }
 
 

@@ -1,12 +1,18 @@
 import React from 'react';
 import './Pokemon.scss';
 import pokeData from './assets/pokemonData.json';
-import Pokeball from './assets/Pokeball.png';
-import PokeOneShake from './assets/PokeOneShake.gif';
-import PokeTwoShakes from './assets/PokeTwoShakes.gif';
-import PokeThreeShakes from './assets/PokeThreeShakes.gif';
-import PokeCaught from './assets/PokeCaught.png';
+import Pokeball from './assets/Pokeball/Pokeball.png';
+import PokeOneShake from './assets/Pokeball/PokeOneShake.gif';
+import PokeTwoShakes from './assets/Pokeball/PokeTwoShakes.gif';
+import PokeThreeShakes from './assets/Pokeball/PokeThreeShakes.gif';
+import PokeCaught from './assets/Pokeball/PokeCaught.png';
 import PokeSmoke from './assets/PokeSmoke.gif';
+
+import Greatball from './assets/Greatball/Greatball.png';
+import GreatOneShake from './assets/Greatball/GreatOneShake.gif';
+import GreatTwoShakes from './assets/Greatball/GreatTwoShakes.gif';
+import GreatThreeShakes from './assets/Greatball/GreatThreeShakes.gif';
+import GreatCaught from './assets/Greatball/GreatCaught.png';
 
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001";
@@ -37,13 +43,25 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       })
     }
     socket.on("PokeballReceive", (data, callback) => receiveBall(data, callback));
+
+    const receiveGreatBall = (data, callback) => {
+      setCurrUser(data);
+      setAnimationTrigger(2);
+      callback({
+        status: 'ok'
+      })
+    }
+    socket.on("GreatballReceive", (data, callback) => receiveGreatBall(data, callback));
   // eslint-disable-next-line
   }, [socket]);
 
   React.useEffect(() => { 
+    var emitObject;
     
     switch (imgIncrement) {
-      // Thrown pokeball animation
+      /* POKEBALL */
+
+      // Thrown Pokeball animation
       case 0:
         setCurrImg('');
         setWrapperClass("innerBase");
@@ -100,7 +118,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("PokeCaught");
         setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
-        var emitObject = {...pokemon, user: currUser}
+        emitObject = {...pokemon, user: currUser}
         socket.emit('pokemonCaught', emitObject);
         break;
       case 7:
@@ -215,6 +233,175 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setCatchAttempt(0);
         loadNewPokemon();
         break;
+
+      /* GREAT BALL, 10 */
+
+      case 101:
+      case 1011:
+      case 1021:
+      case 1031:
+      case 1041:
+        setCurrImg('');
+        setPokemonVis(true);
+        setPokemonClass('pokemon');
+        setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
+        setWrapperClass("emptyTime");
+        setTimer(20);
+        break;
+      case 102:
+      case 1012:
+      case 1022:
+      case 1032:
+      case 1042:
+        setCurrImg(Greatball);
+        setWrapperClass("throw");
+        setPokemonVis(true);
+        setPokemonText(`${currUser.toUpperCase().substring(0, 16)} threw a GREAT BALL`);
+        break;
+      case 103:
+      case 1013:
+      case 1023:
+      case 1033:
+      case 1043:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmoke");
+        break;
+      case 104:
+      case 1014:
+      case 1024:
+      case 1034:
+      case 1044:
+        setCurrImg('');
+        setWrapperClass("postSmoke");
+        setPokemonVis(false);
+        break;
+      // Thrown pokeball, successful catch
+      case 105:
+        setCurrImg(GreatThreeShakes);
+        setWrapperClass("PokeThreeShakes");
+        setPokemonText("...");
+        break;
+      case 106:
+        setCurrImg(GreatCaught);
+        setWrapperClass("PokeCaught");
+        setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
+        setPokemonClass('');
+        emitObject = {...pokemon, user: currUser}
+        socket.emit('pokemonCaught', emitObject);
+        break;
+      case 107:
+        setCurrImg('');
+        setPokemon('');
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        setCatchAttempt(0);
+        loadNewPokemon();
+        break;
+
+      // Thrown pokeball, fails after 3 wobbles
+      case 1015:
+        setCurrImg(GreatThreeShakes);
+        setWrapperClass("PokeThreeShakes")
+        setPokemonText("...");
+        break;
+      case 1016:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmokeOut");
+        break;
+      case 1017:
+        setCurrImg('');
+        setWrapperClass("failedCatch");
+        setPokemonVis(true);
+        setPokemonText(`Gah! It was so close, too!`);
+        freePokemon();
+        break;
+      case 1018:
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        break;
+      // Thrown pokeball, fails after 2 wobbles
+      case 1025:
+        setCurrImg(GreatTwoShakes);
+        setWrapperClass("PokeTwoShakes")
+        setPokemonText("...");
+        break;
+      case 1026:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmokeOut");
+        break;
+      case 1027:
+        setCurrImg('');
+        setWrapperClass("failedCatch");
+        setPokemonVis(true);
+        setPokemonText(`Aargh! Almost had it!`);
+        freePokemon();
+        break;
+      case 1028:
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        break;
+      // Thrown pokeball, fails after 1 wobble
+      case 1035:
+        setCurrImg(GreatOneShake);
+        setWrapperClass("PokeOneShake")
+        setPokemonText("...");
+        break;
+      case 1036:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmokeOut");
+        break;
+      case 1037:
+        setCurrImg('');
+        setWrapperClass("failedCatch");
+        setPokemonVis(true);
+        setPokemonText(`Aww! It appeared to be caught!`);
+        freePokemon();
+        break;
+      case 1038:
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        break;
+      // Thrown pokeball, no wobbles
+      case 1045:
+        setCurrImg(Greatball);
+        setWrapperClass("PokeNoShake")
+        setPokemonText("...");
+        break;
+      case 1046:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmokeOut");
+        break;
+      case 1047:
+        setCurrImg('');
+        setWrapperClass("emptyTime");
+        setPokemonVis(true);
+        setPokemonText(`Oh no! The Pokémon broke free!`);
+        freePokemon();
+        break;
+      case 1048:
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        break;
+      // Pokemon runs away
+      case 1051:
+        setCurrImg('');
+        setWrapperClass("emptyTime");
+        setPokemonVis(true);
+        break;
+      case 1052:
+        setPokemonClass('pokeFadeOut');
+        setPokemonText(`Wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} ran away!`);
+        break;
+      case 1053:
+        setPokemon('');
+        setPokemonVis(false);
+        setPokemonClass('pokemon');
+        setPokemonText('');
+        setImgIncrement(0);
+        setCatchAttempt(0);
+        loadNewPokemon();
+        break;
+
       // Default
       default:
         break;
@@ -251,40 +438,67 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
     }
   }, [pokemon])
 
-  const animationSequence = async () => {
+  const animationSequence = async (balltype) => {
     if (imgIncrement === 0) {
       var currPokemon;
       setCatchAttempt(catchAttempt + 1);
       currPokemon = pokemon;
 
       let capture; 
-      let currentThrowOdds = (Math.random() * 256) + 0.000000001;
-
-      if (pokemon !== '') {
-        capture = parseInt(pokemon.capture_rate) / currentThrowOdds;
-        console.log(capture, pokemon.capture_rate);
-      } else {
-        capture = parseInt(currPokemon.capture_rate) / currentThrowOdds;
-        console.log(capture, currPokemon.capture_rate);
-      }
       
-      if (capture >= 1) {
-        setImgIncrement(1);
-      } else if (capture >= 0.75) {
-        setImgIncrement(11);
-      } else if (capture >= 0.5) {
-        setImgIncrement(21);
-      } else if (capture >= 0.25) {
-        setImgIncrement(31);
-      } else {
-        setImgIncrement(41);
+      if (balltype === "poke") {
+        let currentThrowOdds = (Math.random() * 256) + 0.000000001;
+        if (pokemon !== '') {
+          capture = parseInt(pokemon.capture_rate) / currentThrowOdds;
+          console.log(capture, pokemon.capture_rate);
+        } else {
+          capture = parseInt(currPokemon.capture_rate) / currentThrowOdds;
+          console.log(capture, currPokemon.capture_rate);
+        }
+        
+        if (capture >= 1) {
+          setImgIncrement(1);
+        } else if (capture >= 0.75) {
+          setImgIncrement(11);
+        } else if (capture >= 0.5) {
+          setImgIncrement(21);
+        } else if (capture >= 0.25) {
+          setImgIncrement(31);
+        } else {
+          setImgIncrement(41);
+        }
+      }
+      else if (balltype === "great") {
+        let currentThrowOdds = (Math.random() * 256) + 0.000000001;
+        if (pokemon !== '') {
+          capture = parseInt(pokemon.capture_rate)*1.5 / currentThrowOdds;
+          console.log(capture, pokemon.capture_rate);
+        } else {
+          capture = parseInt(currPokemon.capture_rate)*1.5 / currentThrowOdds;
+          console.log(capture, currPokemon.capture_rate);
+        }
+        
+        if (capture >= 1) {
+          setImgIncrement(101);
+        } else if (capture >= 0.75) {
+          setImgIncrement(1011);
+        } else if (capture >= 0.5) {
+          setImgIncrement(1021);
+        } else if (capture >= 0.25) {
+          setImgIncrement(1031);
+        } else {
+          setImgIncrement(1041);
+        }
       }
     }
   }
 
   React.useEffect(() => {
     if (animationTrigger === 1) {
-      animationSequence();
+      animationSequence("poke");
+      setAnimationTrigger(0);
+    } else if (animationTrigger === 2) {
+      animationSequence("great");
       setAnimationTrigger(0);
     }
 

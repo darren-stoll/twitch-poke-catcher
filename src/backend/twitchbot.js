@@ -11,6 +11,7 @@ const accessToken = process.env.ACCESS_TOKEN;
 const broadcasterId = process.env.BROADCASTER_ID;
 
 const greatBallId = process.env.GREAT_BALL;
+const ultraBallId = process.env.ULTRA_BALL;
 
 const cooldownHeaders = {
   'client-id': clientId,
@@ -19,18 +20,13 @@ const cooldownHeaders = {
 
 const cooldownStartRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=true`;
 const cooldownEndRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=false`;
+const configGBCooldownStart = { method: 'patch', url: cooldownStartRedemptionGBUrl, headers: cooldownHeaders }
+const configGBCooldownEnd = { method: 'patch', url: cooldownEndRedemptionGBUrl, headers: cooldownHeaders }
 
-const configGBCooldownStart = {
-  method: 'patch',
-  url: cooldownStartRedemptionGBUrl,
-  headers: cooldownHeaders
-}
-
-const configGBCooldownEnd = {
-  method: 'patch',
-  url: cooldownEndRedemptionGBUrl,
-  headers: cooldownHeaders
-}
+const cooldownStartRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${ultraBallId}&is_paused=true`;
+const cooldownEndRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${ultraBallId}&is_paused=false`;
+const configUBCooldownStart = { method: 'patch', url: cooldownStartRedemptionUBUrl, headers: cooldownHeaders }
+const configUBCooldownEnd = { method: 'patch', url: cooldownEndRedemptionUBUrl, headers: cooldownHeaders }
 
 const client = tmi.Client({
   options: { debug: true },
@@ -55,8 +51,13 @@ client.connect()
 const cooldownBalls = () => {
   axios(configGBCooldownStart)
     .then(() => {
-      console.log("cooldown start");
-      setTimeout(() => axios(configGBCooldownEnd).then(() => console.log('cooldown end')), 20000);
+      // console.log("cooldown start");
+      setTimeout(() => axios(configGBCooldownEnd).then(() => console.log('cooldown end - great')), 20000);
+    });
+  axios(configUBCooldownStart)
+    .then(() => {
+      // console.log("cooldown start");
+      setTimeout(() => axios(configUBCooldownEnd).then(() => console.log('cooldown end - ultra')), 20000);
     });
 }
 
@@ -84,6 +85,13 @@ const twitchbot = async (socket) => {
         lastTime = Date.now();
         socket.emit("GreatballReceive", msg.userName, (response) => {
           console.log(response.status, "GreatballReceive emit received");
+        }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
+      }
+      else if (msg.rewardId === ultraBallId) {
+        cooldownBalls();
+        lastTime = Date.now();
+        socket.emit("UltraballReceive", msg.userName, (response) => {
+          console.log(response.status, "UltraballReceive emit received");
         }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
       }
       // client.say(CHANNEL, `phil just redeemed ${msg.rewardTitle}`);

@@ -24,7 +24,8 @@ var trainerSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    datecaught: Date
+    datecaught: Date,
+    balltype: String
   }]
 })
 
@@ -35,6 +36,7 @@ const accessToken = process.env.ACCESS_TOKEN;
 const broadcasterId = process.env.BROADCASTER_ID;
 
 const greatBallId = process.env.GREAT_BALL;
+const ultraBallId = process.env.ULTRA_BALL;
 
 const cooldownHeaders = {
   'client-id': clientId,
@@ -43,18 +45,13 @@ const cooldownHeaders = {
 
 const enableRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=false`;
 const disableRedemptionGBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${greatBallId}&is_paused=true`;
+const configGBConnect = { method: 'patch', url: enableRedemptionGBUrl, headers: cooldownHeaders }
+const configGBDisconnect = { method: 'patch', url: disableRedemptionGBUrl, headers: cooldownHeaders }
 
-const configGBConnect = {
-  method: 'patch',
-  url: enableRedemptionGBUrl,
-  headers: cooldownHeaders
-}
-
-const configGBDisconnect = {
-  method: 'patch',
-  url: disableRedemptionGBUrl,
-  headers: cooldownHeaders
-}
+const enableRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${ultraBallId}&is_paused=false`;
+const disableRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${ultraBallId}&is_paused=true`;
+const configUBConnect = { method: 'patch', url: enableRedemptionUBUrl, headers: cooldownHeaders }
+const configUBDisconnect = { method: 'patch', url: disableRedemptionUBUrl, headers: cooldownHeaders }
 
 const server = http.createServer(app);
 
@@ -69,7 +66,14 @@ io.on("connection", socket => {
   console.log("Socket connected");
   axios(configGBConnect)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      console.log(response.data.data[0].title);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  axios(configUBConnect)
+    .then(function (response) {
+      console.log(response.data.data[0].title);
     })
     .catch(function (error) {
       console.log(error);
@@ -87,7 +91,8 @@ io.on("connection", socket => {
           pokemon: [{
             number: data.id,
             name: data.name,
-            datecaught: Date.now()
+            datecaught: Date.now(),
+            balltype: data.balltype
           }]
         })
         await newTrainer.save();
@@ -95,7 +100,8 @@ io.on("connection", socket => {
         var newPokemon = {
           number: data.id,
           name: data.name,
-          datecaught: Date.now()
+          datecaught: Date.now(),
+          balltype: data.balltype
         }
         await userData.updateOne({$push: {pokemon: newPokemon}}, {new: true}, err => {
           if (err) throw err;
@@ -105,13 +111,20 @@ io.on("connection", socket => {
   })
   
   socket.on("disconnect", () => {
-  axios(configGBDisconnect)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    axios(configGBDisconnect)
+      .then(function (response) {
+        console.log(response.data.data[0].title);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    axios(configUBDisconnect)
+      .then(function (response) {
+        console.log(response.data.data[0].title);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     console.log("Socket disconnected");
   })
 })

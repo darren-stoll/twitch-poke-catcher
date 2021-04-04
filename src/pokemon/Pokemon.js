@@ -20,6 +20,10 @@ import UltraTwoShakes from './assets/Ultraball/UltraTwoShakes.gif';
 import UltraThreeShakes from './assets/Ultraball/UltraThreeShakes.gif';
 import UltraCaught from './assets/Ultraball/UltraCaught.png';
 
+import Masterball from './assets/Masterball/Masterball.png';
+import MasterThreeShakes from './assets/Masterball/MasterThreeShakes.gif';
+import MasterCaught from './assets/Masterball/MasterCaught.png';
+
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001";
 
@@ -67,6 +71,15 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       })
     }
     socket.on("UltraballReceive", (data, callback) => receiveUltraBall(data, callback));
+
+    const receiveMasterBall = (data, callback) => {
+      setCurrUser(data);
+      setAnimationTrigger(4);
+      callback({
+        status: 'ok'
+      })
+    }
+    socket.on("MasterballReceive", (data, callback) => receiveMasterBall(data, callback));
   // eslint-disable-next-line
   }, [socket]);
 
@@ -585,6 +598,54 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         loadNewPokemon();
         break;
 
+      /* MASTER BALL, 30 */
+
+      case 301:
+        setCurrImg('');
+        setPokemonVis(true);
+        setPokemonClass('pokemon');
+        setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
+        setWrapperClass("emptyTime");
+        setTimer(20);
+        break;
+      case 302:
+        setCurrImg(Masterball);
+        setWrapperClass("throw");
+        setPokemonVis(true);
+        setPokemonText(`${currUser.toUpperCase().substring(0, 16)} threw a MASTER BALL`);
+        break;
+      case 303:
+        setCurrImg(PokeSmoke);
+        setWrapperClass("PokeSmoke");
+        break;
+      case 304:
+        setCurrImg('');
+        setWrapperClass("postSmoke");
+        setPokemonVis(false);
+        break;
+      // Thrown pokeball, successful catch
+      case 305:
+        setCurrImg(MasterThreeShakes);
+        setWrapperClass("PokeThreeShakes");
+        setPokemonText("...");
+        break;
+      case 306:
+        setCurrImg(MasterCaught);
+        setWrapperClass("PokeCaught");
+        setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
+        setPokemonClass('');
+        emitObject = {...pokemon, user: currUser, balltype: "master"}
+        socket.emit('pokemonCaught', emitObject);
+        break;
+      case 307:
+        setCurrImg('');
+        setPokemon('');
+        setWrapperClass("innerBase");
+        setImgIncrement(0);
+        setCatchAttempt(0);
+        loadNewPokemon();
+        break;
+
       // Default
       default:
         break;
@@ -695,6 +756,9 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
           setImgIncrement(2041);
         }
       }
+      else if (balltype === "master") {
+        setImgIncrement(301);
+      }
     }
   }
 
@@ -707,6 +771,9 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       setAnimationTrigger(0);
     } else if (animationTrigger === 3) {
       animationSequence("ultra");
+      setAnimationTrigger(0);
+    } else if (animationTrigger === 4) {
+      animationSequence("master");
       setAnimationTrigger(0);
     }
 
@@ -740,8 +807,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       {pokemonText !== '' ? <div className="pokemonText">
         {pokemonText}
       </div> : <div style={{height: "46.4px"}}></div>}
-      {timer > 0 ? <div className="timer">Cooldown timer: {timer}</div>
-       : <div className="timer">Ready to !throw</div>}
+      {timer > 0 ? <div className="timer">Cooldown timer: {timer} | Throws left: {5 - catchAttempt}</div>
+       : <div className="timer">Ready to !throw | Throws left: {5 - catchAttempt}</div>}
     </div>
   );
 }

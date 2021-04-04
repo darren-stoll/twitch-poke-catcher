@@ -12,6 +12,7 @@ const broadcasterId = process.env.BROADCASTER_ID;
 
 const greatBallId = process.env.GREAT_BALL;
 const ultraBallId = process.env.ULTRA_BALL;
+const masterBallId = process.env.MASTER_BALL;
 
 const cooldownHeaders = {
   'client-id': clientId,
@@ -27,6 +28,11 @@ const cooldownStartRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points
 const cooldownEndRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${ultraBallId}&is_paused=false`;
 const configUBCooldownStart = { method: 'patch', url: cooldownStartRedemptionUBUrl, headers: cooldownHeaders }
 const configUBCooldownEnd = { method: 'patch', url: cooldownEndRedemptionUBUrl, headers: cooldownHeaders }
+
+const cooldownStartRedemptionMBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${masterBallId}&is_paused=true`;
+const cooldownEndRedemptionMBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${masterBallId}&is_paused=false`;
+const configMBCooldownStart = { method: 'patch', url: cooldownStartRedemptionMBUrl, headers: cooldownHeaders }
+const configMBCooldownEnd = { method: 'patch', url: cooldownEndRedemptionMBUrl, headers: cooldownHeaders }
 
 const client = tmi.Client({
   options: { debug: true },
@@ -58,6 +64,11 @@ const cooldownBalls = () => {
     .then(() => {
       // console.log("cooldown start");
       setTimeout(() => axios(configUBCooldownEnd).then(() => console.log('cooldown end - ultra')), 20000);
+    });
+  axios(configMBCooldownStart)
+    .then(() => {
+      // console.log("cooldown start");
+      setTimeout(() => axios(configMBCooldownEnd).then(() => console.log('cooldown end - master')), 20000);
     });
 }
 
@@ -92,6 +103,13 @@ const twitchbot = async (socket) => {
         lastTime = Date.now();
         socket.emit("UltraballReceive", msg.userName, (response) => {
           console.log(response.status, "UltraballReceive emit received");
+        }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
+      }
+      else if (msg.rewardId === masterBallId) {
+        cooldownBalls();
+        lastTime = Date.now();
+        socket.emit("MasterballReceive", msg.userName, (response) => {
+          console.log(response.status, "MasterballReceive emit received");
         }) // Problem is here in that it sends duplicate emits, and I don't know why yet; however, client.say isn't duplicated
       }
       // client.say(CHANNEL, `phil just redeemed ${msg.rewardTitle}`);

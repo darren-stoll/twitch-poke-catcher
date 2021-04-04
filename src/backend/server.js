@@ -37,6 +37,7 @@ const broadcasterId = process.env.BROADCASTER_ID;
 
 const greatBallId = process.env.GREAT_BALL;
 const ultraBallId = process.env.ULTRA_BALL;
+const masterBallId = process.env.MASTER_BALL;
 
 const cooldownHeaders = {
   'client-id': clientId,
@@ -53,6 +54,11 @@ const disableRedemptionUBUrl = `https://api.twitch.tv/helix/channel_points/custo
 const configUBConnect = { method: 'patch', url: enableRedemptionUBUrl, headers: cooldownHeaders }
 const configUBDisconnect = { method: 'patch', url: disableRedemptionUBUrl, headers: cooldownHeaders }
 
+const enableRedemptionMBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${masterBallId}&is_paused=false`;
+const disableRedemptionMBUrl = `https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id=${broadcasterId}&id=${masterBallId}&is_paused=true`;
+const configMBConnect = { method: 'patch', url: enableRedemptionMBUrl, headers: cooldownHeaders }
+const configMBDisconnect = { method: 'patch', url: disableRedemptionMBUrl, headers: cooldownHeaders }
+
 const server = http.createServer(app);
 
 const io = socketIo(server, {
@@ -66,14 +72,21 @@ io.on("connection", socket => {
   console.log("Socket connected");
   axios(configGBConnect)
     .then(function (response) {
-      console.log(response.data.data[0].title);
+      console.log(response.data.data[0].title, "is live");
     })
     .catch(function (error) {
       console.log(error);
     });
   axios(configUBConnect)
     .then(function (response) {
-      console.log(response.data.data[0].title);
+      console.log(response.data.data[0].title, "is live");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  axios(configMBConnect)
+    .then(function (response) {
+      console.log(response.data.data[0].title, "is live");
     })
     .catch(function (error) {
       console.log(error);
@@ -113,14 +126,21 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     axios(configGBDisconnect)
       .then(function (response) {
-        console.log(response.data.data[0].title);
+        console.log(response.data.data[0].title, "is offline");
       })
       .catch(function (error) {
         console.log(error);
       });
     axios(configUBDisconnect)
       .then(function (response) {
-        console.log(response.data.data[0].title);
+        console.log(response.data.data[0].title, "is offline");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    axios(configMBDisconnect)
+      .then(function (response) {
+        console.log(response.data.data[0].title, "is offline");
       })
       .catch(function (error) {
         console.log(error);

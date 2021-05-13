@@ -90,7 +90,12 @@ const twitchbot = async (socket) => {
     const userID = await pubSubClient.registerUserListener(apiClient);
     
     await pubSubClient.onRedemption(userID, async msg => {
+
+      // console.log(channel);
       // console.log(msg.rewardId);
+      // let userSubscriptionStatus = await apiClient.kraken.users.getSubscriptionData(msg.userId, broadcasterId)
+      // console.log(msg.userDisplayName, msg.userId, 'is subscribed to', userSubscriptionStatus);
+      // console.log(userID);
       if (msg.rewardId === greatBallId) {
         cooldownBalls();
         lastTime = Date.now();
@@ -153,6 +158,7 @@ const twitchbot = async (socket) => {
       // !pokemon command - throws a pokeball
       if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
         // client.say(channel, `@${tags.username} throws the Poké Ball!`)
+        console.log(tags);
         lastTime = Date.now();
         cooldownBalls();
         socket.emit("PokeballReceive", tags.username, (response) => {

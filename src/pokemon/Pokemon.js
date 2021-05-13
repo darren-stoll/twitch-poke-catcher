@@ -33,15 +33,22 @@ const socket = socketIOClient(ENDPOINT);
 // Keep a list of pokemon a user has caught
 
 const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttempt, setCatchAttempt, animationTrigger, setAnimationTrigger, currUser, setCurrUser}) => {
+  const GLOBALTIME = 600;
+  
   const [currImg, setCurrImg] = React.useState('')
   const [wrapperClass, setWrapperClass] = React.useState('');
   const [pokemonClass, setPokemonClass] = React.useState('pokemon');
   const [pokemonVis, setPokemonVis] = React.useState(false);
   const [pokemonText, setPokemonText] = React.useState('');
   const [timer, setTimer] = React.useState(4);
+  const [globalTimer, setGlobalTimer] = React.useState(GLOBALTIME);
+
+  
 
   const freePokemon = () => {
-    if (catchAttempt === 5) setImgIncrement(51);
+    if (catchAttempt === 5) {
+      setImgIncrement(51);
+    }
   }
 
   React.useEffect(() => {
@@ -107,6 +114,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
         setWrapperClass("emptyTime");
         setTimer(20);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 2:
       case 12:
@@ -251,6 +259,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 52:
         setPokemonClass('pokeFadeOut');
         setPokemonText(`Wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} ran away!`);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 53:
         setPokemon('');
@@ -275,6 +284,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
         setWrapperClass("emptyTime");
         setTimer(20);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 102:
       case 1012:
@@ -419,6 +429,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 1052:
         setPokemonClass('pokeFadeOut');
         setPokemonText(`Wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} ran away!`);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 1053:
         setPokemon('');
@@ -443,6 +454,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
         setWrapperClass("emptyTime");
         setTimer(20);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 202:
       case 2012:
@@ -587,6 +599,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       case 2052:
         setPokemonClass('pokeFadeOut');
         setPokemonText(`Wild ${pokemon.name.toUpperCase().replace(/-/gi, " ")} ran away!`);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 2053:
         setPokemon('');
@@ -607,6 +620,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setPokemonText(`${pokemon.name.toUpperCase().replace(/-/gi, " ")} is watching closely...`);
         setWrapperClass("emptyTime");
         setTimer(20);
+        setGlobalTimer(GLOBALTIME);
         break;
       case 302:
         setCurrImg(Masterball);
@@ -661,6 +675,22 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       }, 1000);
     }
   }, [timer])
+
+  React.useEffect(() => {
+    setInterval(() => {
+      setGlobalTimer(t => t - 1);
+    }, 1000);
+  }, [])
+
+  // If pokemon is on the field for too long, pokemon runs away
+  React.useEffect(() => {
+    if (globalTimer === 0) {
+      console.log(globalTimer);
+      setPokemonClass('pokemon');
+      setImgIncrement(51);
+    }
+  // eslint-disable-next-line
+  }, [globalTimer])
 
   const loadNewPokemon = async () => {
     setTimeout(() => {
@@ -807,8 +837,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       {pokemonText !== '' ? <div className="pokemonText">
         {pokemonText}
       </div> : <div style={{height: "46.4px"}}></div>}
-      {timer > 0 ? <div className="timer">Cooldown timer: {timer} | Throws left: {5 - catchAttempt}</div>
-       : <div className="timer">Ready to !throw | Throws left: {5 - catchAttempt}</div>}
+      {timer > 0 ? <div className="timer">Cooldown timer: {timer} | global: {globalTimer} | Throws left: {5 - catchAttempt}</div>
+       : <div className="timer">Ready to !throw | global: {globalTimer} | Throws left: {5 - catchAttempt}</div>}
     </div>
   );
 }

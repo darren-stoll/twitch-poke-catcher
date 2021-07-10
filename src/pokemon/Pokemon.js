@@ -1,6 +1,7 @@
 import React from 'react';
 import './Pokemon.scss';
-import pokeData from './assets/pokemonData.json';
+// import pokeData from './assets/pokemonData.json';
+import pokeData from './assets/touhouData.json';
 import Pokeball from './assets/Pokeball/Pokeball.png';
 import PokeOneShake from './assets/Pokeball/PokeOneShake.gif';
 import PokeTwoShakes from './assets/Pokeball/PokeTwoShakes.gif';
@@ -154,7 +155,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("PokeCaught");
         setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
-        emitObject = {...pokemon, user: currUser, balltype: "poke"}
+        emitObject = {...pokemon, user: currUser, balltype: "poke", catchrate: parseInt(pokemon.capture_rate)}
         socket.emit('pokemonCaught', emitObject);
         break;
       case 7:
@@ -243,7 +244,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setCurrImg('');
         setWrapperClass("emptyTime");
         setPokemonVis(true);
-        setPokemonText(`Oh no! The Pokémon broke free!`);
+        // setPokemonText(`Oh no! The Pokémon broke free!`);
+        setPokemonText(`Oh no! The Puppet broke free!`);
         freePokemon();
         break;
       case 48:
@@ -324,7 +326,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("PokeCaught");
         setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
-        emitObject = {...pokemon, user: currUser, balltype: "great"}
+        emitObject = {...pokemon, user: currUser, balltype: "great", catchrate: parseInt(pokemon.capture_rate)}
         socket.emit('pokemonCaught', emitObject);
         break;
       case 107:
@@ -413,7 +415,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setCurrImg('');
         setWrapperClass("emptyTime");
         setPokemonVis(true);
-        setPokemonText(`Oh no! The Pokémon broke free!`);
+        // setPokemonText(`Oh no! The Pokémon broke free!`);
+        setPokemonText(`Oh no! The Puppet broke free!`);
         freePokemon();
         break;
       case 1048:
@@ -494,7 +497,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("PokeCaught");
         setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
-        emitObject = {...pokemon, user: currUser, balltype: "ultra"}
+        emitObject = {...pokemon, user: currUser, balltype: "ultra", catchrate: parseInt(pokemon.capture_rate)}
         socket.emit('pokemonCaught', emitObject);
         break;
       case 207:
@@ -583,7 +586,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setCurrImg('');
         setWrapperClass("emptyTime");
         setPokemonVis(true);
-        setPokemonText(`Oh no! The Pokémon broke free!`);
+        // setPokemonText(`Oh no! The Pokémon broke free!`);
+        setPokemonText(`Oh no! The Puppet broke free!`);
         freePokemon();
         break;
       case 2048:
@@ -648,7 +652,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
         setWrapperClass("PokeCaught");
         setPokemonText(`Gotcha! ${currUser.toUpperCase().substring(0, 16)} caught ${pokemon.name.toUpperCase().replace(/-/gi, " ")}!`);
         setPokemonClass('');
-        emitObject = {...pokemon, user: currUser, balltype: "master"}
+        emitObject = {...pokemon, user: currUser, balltype: "master", catchrate: parseInt(pokemon.capture_rate)}
         socket.emit('pokemonCaught', emitObject);
         break;
       case 307:
@@ -686,7 +690,7 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
   React.useEffect(() => {
     if (globalTimer === 0) {
       console.log(globalTimer);
-      setPokemonClass('pokemon');
+      setPokemonClass('npm');
       setImgIncrement(51);
     }
   // eslint-disable-next-line
@@ -694,8 +698,9 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
 
   const loadNewPokemon = async () => {
     setTimeout(() => {
-      var randomPokemonID = Math.floor(Math.random() * (899 - 1) + 1);
-      setPokemon(pokeData.pokemon[randomPokemonID - 1])
+      var randomPokemonID = Math.floor(Math.random() * (pokeData.pokemon.length - 1) + 1);
+      // var randomPokemonID = Math.floor(Math.random() * (10 - 1) + 1);
+      setPokemon(pokeData.pokemon[randomPokemonID - 1]);
     }, 2000);
   }
 
@@ -824,10 +829,18 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
           <img src={currImg} alt={currImg} />
         </div>
         <div className="pokemonWrapper">
-          <img 
+          {/* <img 
             className={pokemonClass} 
             src={pokemonVis && pokemon !== '' ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` : ''} 
             alt={pokemonVis && pokemon !== '' ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png` : ''} 
+            onAnimationEnd={() => {
+              if (pokemonClass !== 'pokeFadeIn') setImgIncrement(imgIncrement + 1)
+            }}
+            /> */}
+          <img 
+            className={pokemonClass} 
+            src={pokemonVis && pokemon !== '' ? `${pokemon.gif_href}` : ''} 
+            alt={pokemonVis && pokemon !== '' ? `${pokemon.gif_href}` : ''} 
             onAnimationEnd={() => {
               if (pokemonClass !== 'pokeFadeIn') setImgIncrement(imgIncrement + 1)
             }}
@@ -837,8 +850,8 @@ const Pokemon = ({imgIncrement, setImgIncrement, pokemon, setPokemon, catchAttem
       {pokemonText !== '' ? <div className="pokemonText">
         {pokemonText}
       </div> : <div style={{height: "46.4px"}}></div>}
-      {timer > 0 ? <div className="timer">Cooldown timer: {timer} | global: {globalTimer} | Throws left: {5 - catchAttempt}</div>
-       : <div className="timer">Ready to !throw | global: {globalTimer} | Throws left: {5 - catchAttempt}</div>}
+      {timer > 0 ? <div className="timer">Cooldown timer: {timer} | Throws left: {5 - catchAttempt}</div>
+       : <div className="timer">Ready to !throw | Throws left: {5 - catchAttempt}</div>}
     </div>
   );
 }

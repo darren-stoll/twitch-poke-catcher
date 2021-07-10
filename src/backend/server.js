@@ -26,8 +26,21 @@ var trainerSchema = new mongoose.Schema({
     },
     datecaught: Date,
     balltype: String
-  }]
+  }],
+  points: {
+    type: Number,
+    required: true
+  },
+  totalScore: Number
 })
+
+// SCORE
+// if >= 225 +1
+// elif >= 180 +2
+// elif >= 125 +3
+// elif >= 75 +5
+// elif >= 25 +8
+// else +20
 
 const Trainer = mongoose.model("Trainer", trainerSchema);
 
@@ -98,6 +111,16 @@ io.on("connection", socket => {
     console.log(data);
     Trainer.findOne({name: data.user}).exec(async (err, userData) => {
       if (err) throw err;
+      let addScore = 0;
+      console.log(data);
+      let currCatchRate = data.catchrate;
+      // console.log(currCatchRate);
+      if (currCatchRate > 224) addScore = 1;
+      else if (currCatchRate > 179) addScore = 2;
+      else if (currCatchRate > 124) addScore = 3;
+      else if (currCatchRate > 74) addScore = 5;
+      else if (currCatchRate > 24) addScore = 8;
+      else addScore = 20;
       if (!userData || userData.length === 0) { // If trainer doesn't exist, create new trainer
         var newTrainer = new Trainer({
           name: data.user,
@@ -106,7 +129,9 @@ io.on("connection", socket => {
             name: data.name,
             datecaught: Date.now(),
             balltype: data.balltype
-          }]
+          }],
+          points: 1,
+          totalScore: addScore
         })
         await newTrainer.save();
       } else { // Add a pokemon to an existing trainer
@@ -116,7 +141,7 @@ io.on("connection", socket => {
           datecaught: Date.now(),
           balltype: data.balltype
         }
-        await userData.updateOne({$push: {pokemon: newPokemon}}, {new: true}, err => {
+        await userData.updateOne({$push: {pokemon: newPokemon}, $inc: {points: 1, totalScore: addScore}}, {new: true}, err => {
           if (err) throw err;
         })
       }

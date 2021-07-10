@@ -148,17 +148,28 @@ const twitchbot = async (socket) => {
         client.say(CHANNEL, "Twitch Pokemon Catcher FAQ here - https://pastebin.com/u36bqFtq");
         faqLastTime = Date.now();
       }
+
+      if (message.toLowerCase() === "!wsc" && Date.now() - lastTime > cooldown) {
+        client.say(CHANNEL, "Weekly Speedrun Challenge (2021) is a self-imposed challenge where I pick a game and category at the beginning of the week and learn to speedrun it by the end of the week. Past challenges listed here: http://bombch.us/DQjF");
+        lastTime = Date.now();
+      }
   
-      // !list command - creates a pastebin with that user's list of pokemon
+      // !list command - links to that user's list of pokemon
       if (message.toLowerCase() === "!list" && Date.now() - listLastTime > listCooldown) {
         client.say(CHANNEL, `${tags.username}, your list can be found here: https://twitch-doicm-pc.herokuapp.com/trainer/${tags.username}`);
         listLastTime = Date.now();
-      } 
+      }
+      
+      // !lb command - links to the leaderboards for twitch pokemon catcher
+      if (message.toLowerCase() === "!lb" && Date.now() - listLastTime > listCooldown) {
+        client.say(CHANNEL, `The leaderboards are hosted here: https://twitch-doicm-leaderboard.herokuapp.com/`);
+        listLastTime = Date.now();
+      }
       
       // !pokemon command - throws a pokeball
       if (message.toLowerCase() === "!throw" && Date.now() - lastTime > cooldown) {
         // client.say(channel, `@${tags.username} throws the Poké Ball!`)
-        console.log(tags);
+        // console.log(tags);
         lastTime = Date.now();
         cooldownBalls();
         socket.emit("PokeballReceive", tags.username, (response) => {

@@ -1,0 +1,856 @@
+{
+	"pokemon": [
+		{
+			"id": "1000",
+			"name": "reimu",
+			"capture_rate": "75",
+      "gif_href": "http://en.tpdpwiki.net/w/images/6/6f/Reimu.gif" 
+		},
+		{
+			"id": "1004",
+			"name": "marisa",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a5/Marisa.gif"
+		},
+    {
+			"id": "1008",
+			"name": "shingyoku",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c1/Shingyoku.gif"
+		},
+    {
+			"id": "1012",
+			"name": "magan",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b0/Magan.gif"
+		},
+    {
+			"id": "1016",
+			"name": "elis",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/cf/Elis.gif"
+		},
+    {
+			"id": "1020",
+			"name": "sariel",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/59/Sariel.gif"
+		},
+    {
+			"id": "1024",
+			"name": "mima",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/f2/Mima.gif"
+		},
+    {
+			"id": "1028",
+			"name": "kikuri",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/21/Kikuri.gif"
+		},
+    {
+			"id": "1032",
+			"name": "konngara",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/12/Konngara.gif"
+		},
+    {
+			"id": "1036",
+			"name": "rika",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2f/Rika.gif"
+		},
+    {
+			"id": "1040",
+			"name": "meira",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/cb/Meira.gif"
+		},
+    {
+			"id": "1044",
+			"name": "ellen",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/0e/Ellen.gif"
+		},
+    {
+			"id": "1048",
+			"name": "kotohime",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/fa/Kotohime.gif"
+		},
+    {
+			"id": "1052",
+			"name": "kana",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/77/Kana.gif"
+		},
+    {
+			"id": "1056",
+			"name": "rikako",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/16/Rikako.gif"
+		},
+    {
+			"id": "1060",
+			"name": "chiyuri",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/12/Chiyuri.gif"
+		},
+    {
+			"id": "1064",
+			"name": "yumemi",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/6c/Yumemi.gif"
+		},
+    {
+			"id": "1068",
+			"name": "ruukoto",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/57/Ruukoto.gif"
+		},
+    {
+			"id": "1072",
+			"name": "orange",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/40/Orange.gif"
+		},
+    {
+			"id": "1076",
+			"name": "kurumi",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e7/Kurumi.gif"
+		},
+    {
+			"id": "1080",
+			"name": "elly",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/69/Elly.gif"
+		},
+    {
+			"id": "1084",
+			"name": "yuuka",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/de/Yuuka.gif"
+		},
+    {
+			"id": "1088",
+			"name": "mugetsu",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/81/Mugetsu.gif"
+		},
+    {
+			"id": "1092",
+			"name": "gengetsu",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/d8/Gengetsu.gif"
+		},
+    {
+			"id": "1096",
+			"name": "sara",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/bc/Sara.gif"
+		},
+    {
+			"id": "1100",
+			"name": "louise",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/d3/Louise.gif"
+		},
+    {
+			"id": "1104",
+			"name": "alice",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/01/Alice.gif"
+		},
+    {
+			"id": "1108",
+			"name": "yuki",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/3d/Yuki.gif"
+		},
+    {
+			"id": "1112",
+			"name": "mai",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/29/Mai.gif"
+		},
+    {
+			"id": "1116",
+			"name": "yumeko",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/93/Yumeko.gif"
+		},
+    {
+			"id": "1120",
+			"name": "shinki",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/00/Shinki.gif"
+		},
+    {
+			"id": "1124",
+			"name": "rumia",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/8b/Rumia.gif"
+		},
+    {
+			"id": "1128",
+			"name": "daiyousei",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/81/Daiyousei.gif"
+		},
+    {
+			"id": "1132",
+			"name": "cirno",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/05/Cirno.gif"
+		},
+    {
+			"id": "1136",
+			"name": "meiling",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/47/Meiling.gif"
+		},
+    {
+			"id": "1140",
+			"name": "koakuma",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/4e/Koakuma.gif"
+		},
+    {
+			"id": "1144",
+			"name": "patchouli",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/3b/Patchouli.gif"
+		},
+    {
+			"id": "1148",
+			"name": "sakuya",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/7f/Sakuya.gif"
+		},
+    {
+			"id": "1152",
+			"name": "remilia",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e0/Remilia.gif"
+		},
+    {
+			"id": "1156",
+			"name": "flandre",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/48/Flandre.gif"
+		},
+    {
+			"id": "1160",
+			"name": "letty",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/af/Letty.gif"
+		},
+    {
+			"id": "1164",
+			"name": "chen",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/25/Chen.gif"
+		},
+    {
+			"id": "1168",
+			"name": "lily",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/9d/Lily.gif"
+		},
+    {
+			"id": "1172",
+			"name": "lyrica",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b6/Lyrica.gif"
+		},
+    {
+			"id": "1176",
+			"name": "merlin",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/65/Merlin.gif"
+		},
+    {
+			"id": "1180",
+			"name": "lunasa",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/f7/Lunasa.gif"
+		},
+    {
+			"id": "1184",
+			"name": "youmu",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/03/Youmu.gif"
+		},
+    {
+			"id": "1188",
+			"name": "yuyuko",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c3/Yuyuko.gif"
+		},
+    {
+			"id": "1192",
+			"name": "ran",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a4/Ran.gif"
+		},
+    {
+			"id": "1196",
+			"name": "yukari",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e3/Yukari.gif"
+		},
+    {
+			"id": "1200",
+			"name": "renko",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/10/Renko.gif"
+		},
+    {
+			"id": "1204",
+			"name": "maribel",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/f3/Maribel.gif"
+		},
+    {
+			"id": "1208",
+			"name": "rinnosuke",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/1c/Rinnosuke.gif"
+		},
+    {
+			"id": "1212",
+			"name": "tokiko",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b8/Tokiko.gif"
+		},
+    {
+			"id": "1216",
+			"name": "wriggle",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e8/Wriggle.gif"
+		},
+    {
+			"id": "1220",
+			"name": "mystia",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c8/Mystia.gif"
+		},
+    {
+			"id": "1224",
+			"name": "keine",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/4a/Keine.gif"
+		},
+    {
+			"id": "1228",
+			"name": "tewi",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/f9/Tewi.gif"
+		},
+    {
+			"id": "1232",
+			"name": "udonge",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a4/Udonge.gif"
+		},
+    {
+			"id": "1236",
+			"name": "eirin",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2a/Eirin.gif"
+		},
+    {
+			"id": "1240",
+			"name": "kaguya",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/f/f1/Kaguya.gif"
+		},
+    {
+			"id": "1244",
+			"name": "mokou",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/d1/Mokou.gif"
+		},
+    {
+			"id": "1248",
+			"name": "suika",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/1d/Suika.gif"
+		},
+    {
+			"id": "1252",
+			"name": "sunny",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/98/Sunny.gif"
+		},
+    {
+			"id": "1256",
+			"name": "luna",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/52/Luna.gif"
+		},
+    {
+			"id": "1260",
+			"name": "star",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/08/Star.gif"
+		},
+    {
+			"id": "1264",
+			"name": "medicine",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/eb/Medicine_a.gif"
+		},
+    {
+			"id": "1268",
+			"name": "aya",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/31/Aya.gif"
+		},
+    {
+			"id": "1272",
+			"name": "komachi",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/28/Komachi.gif"
+		},
+    {
+			"id": "1276",
+			"name": "eiki",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/91/Eiki.gif"
+		},
+    {
+			"id": "1280",
+			"name": "akyuu",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/9f/Akyuu.gif"
+		},
+    {
+			"id": "1284",
+			"name": "yorihime",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/08/Yorihime.gif"
+		},
+    {
+			"id": "1288",
+			"name": "toyohime",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/3f/Toyohime.gif"
+		},
+    {
+			"id": "1292",
+			"name": "rei'sen",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/ae/Gyokuto.gif"
+		},
+    {
+			"id": "1296",
+			"name": "shizuha",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/67/Shizuha.gif"
+		},
+    {
+			"id": "1300",
+			"name": "minoriko",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/89/Minoriko.gif"
+		},
+    {
+			"id": "1304",
+			"name": "hina",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b8/Hina.gif"
+		},
+    {
+			"id": "1308",
+			"name": "nitori",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/5a/Nitori.gif"
+		},
+    {
+			"id": "1312",
+			"name": "momiji",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/5b/Momiji.gif"
+		},
+    {
+			"id": "1316",
+			"name": "sanae",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2e/Sanae.gif"
+		},
+    {
+			"id": "1320",
+			"name": "kanako",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/ca/Kanako.gif"
+		},
+    {
+			"id": "1324",
+			"name": "suwako",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/0b/Suwako.gif"
+		},
+    {
+			"id": "1328",
+			"name": "iku",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b1/Iku.gif"
+		},
+    {
+			"id": "1332",
+			"name": "tenshi",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/72/Tenshi.gif"
+		},
+    {
+			"id": "1336",
+			"name": "kisume",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/15/Kisume.gif"
+		},
+    {
+			"id": "1340",
+			"name": "yamame",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/09/Yamame.gif"
+		},
+    {
+			"id": "1344",
+			"name": "parsee",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/53/Parsee.gif"
+		},
+    {
+			"id": "1348",
+			"name": "yuugi",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/76/Yuugi.gif"
+		},
+    {
+			"id": "1352",
+			"name": "satori",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e7/Satori.gif"
+		},
+    {
+			"id": "1356",
+			"name": "rin",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2b/Rin.gif"
+		},
+    {
+			"id": "1360",
+			"name": "utsuho",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/6c/Utsuho.gif"
+		},
+    {
+			"id": "1364",
+			"name": "koishi",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b3/Koishi.gif"
+		},
+    {
+			"id": "1368",
+			"name": "nazrin",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/dd/Nazrin.gif"
+		},
+    {
+			"id": "1372",
+			"name": "kogasa",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/5a/Kogasa.gif"
+		},
+    {
+			"id": "1376",
+			"name": "ichirin",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2a/Ichirin.gif"
+		},
+    {
+			"id": "1380",
+			"name": "murasa",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/05/Murasa.gif"
+		},
+    {
+			"id": "1384",
+			"name": "shou",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/e/e4/Shou.gif"
+		},
+    {
+			"id": "1388",
+			"name": "hijiri",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/9/9f/Hijiri.gif"
+		},
+    {
+			"id": "1392",
+			"name": "nue",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/32/Nue.gif"
+		},
+    {
+			"id": "1396",
+			"name": "hatate",
+			"capture_rate": "75",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/8d/Hatate.gif"
+		},
+    {
+			"id": "1400",
+			"name": "kasen",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/79/Kasen.gif"
+		},
+    {
+			"id": "1404",
+			"name": "kyouko",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/d1/Kyouko.gif"
+		},
+    {
+			"id": "1408",
+			"name": "yoshika",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/29/Yoshika.gif"
+		},
+    {
+			"id": "1412",
+			"name": "seiga",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/81/Seiga.gif"
+		},
+    {
+			"id": "1416",
+			"name": "tojiko",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/5d/Tojiko.gif"
+		},
+    {
+			"id": "1420",
+			"name": "futo",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/b6/Futo.gif"
+		},
+    {
+			"id": "1424",
+			"name": "miko",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2d/Miko.gif"
+		},
+    {
+			"id": "1428",
+			"name": "mamizou",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/b/bf/Mamizou.gif"
+		},
+    {
+			"id": "1432",
+			"name": "kosuzu",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/85/Kosuzu.gif"
+		},
+    {
+			"id": "1436",
+			"name": "kokoro",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/1/1e/Kokoro.gif"
+		},
+    {
+			"id": "1440",
+			"name": "wakasagi",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c5/Wakasagi.gif"
+		},
+    {
+			"id": "1444",
+			"name": "sekibanki",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/0b/Sekibanki.gif"
+		},
+    {
+			"id": "1448",
+			"name": "kagerou",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/56/Kagerou.gif"
+		},
+    {
+			"id": "1452",
+			"name": "benben",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/0/09/Benben.gif"
+		},
+    {
+			"id": "1456",
+			"name": "yatsuhashi",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/23/Yatsuhashi.gif"
+		},
+    {
+			"id": "1460",
+			"name": "seija",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a7/Seija.gif"
+		},
+    {
+			"id": "1464",
+			"name": "sukuna",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/36/Sukuna.gif"
+		},
+    {
+			"id": "1468",
+			"name": "raiko",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/75/Raiko.gif"
+		},
+    {
+			"id": "1472",
+			"name": "sumireko",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/dd/Sumireko.gif"
+		},
+    {
+			"id": "1476",
+			"name": "seiran",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c2/Seiran.gif"
+		},
+    {
+			"id": "1480",
+			"name": "ringo",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/8d/Ringo.gif"
+		},
+    {
+			"id": "1484",
+			"name": "doremy",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/6e/Doremy.gif"
+		},
+    {
+			"id": "1488",
+			"name": "sagume",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/5/52/Sagume.gif"
+		},
+    {
+			"id": "1492",
+			"name": "clownpiece",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/d9/Clownpiece.gif"
+		},
+    {
+			"id": "1496",
+			"name": "junko",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/22/Junko.gif"
+		},
+    {
+			"id": "1500",
+			"name": "hecatia",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/3f/Hecatia.gif"
+		},
+		{
+			"id": "1504",
+			"name": "yorigami",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/cb/Shard_of_Dreams_-_Extended_-_Yorigami.gif"
+		},
+		{
+			"id": "1508",
+			"name": "eternity",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/de/Shard_of_Dreams_-_Extended_-_Eternity.gif"
+		},
+		{
+			"id": "1512",
+			"name": "nemuno",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/2c/Shard_of_Dreams_-_Extended_-_Nemuno.gif"
+		},
+		{
+			"id": "1516",
+			"name": "aunn",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/2/29/Shard_of_Dreams_-_Extended_-_Aunn.gif"
+		},
+		{
+			"id": "1520",
+			"name": "narumi",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/af/Shard_of_Dreams_-_Extended_-_Narumi.gif"
+		},
+		{
+			"id": "1524",
+			"name": "teireida",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a9/Shard_of_Dreams_-_Extended_-_Teireida.gif"
+		},
+		{
+			"id": "1528",
+			"name": "satono",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a9/Shard_of_Dreams_-_Extended_-_Satono.gif"
+		},
+		{
+			"id": "1532",
+			"name": "okina",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/8c/Shard_of_Dreams_-_Extended_-_Okina.gif"
+		},
+		{
+			"id": "1536",
+			"name": "eika",
+			"capture_rate": "255",
+			"gif_href": "http://en.tpdpwiki.net/w/images/4/47/Shard_of_Dreams_-_Extended_-_Eika.gif"
+		},
+		{
+			"id": "1540",
+			"name": "urumi",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/d/dc/Shard_of_Dreams_-_Extended_-_Urumi.gif"
+		},
+		{
+			"id": "1544",
+			"name": "kutaka",
+			"capture_rate": "150",
+			"gif_href": "http://en.tpdpwiki.net/w/images/a/a5/Shard_of_Dreams_-_Extended_-_Kutaka.gif"
+		},
+		{
+			"id": "1548",
+			"name": "yachie",
+			"capture_rate": "100",
+			"gif_href": "http://en.tpdpwiki.net/w/images/8/80/Shard_of_Dreams_-_Extended_-_Yachie.gif"
+		},
+		{
+			"id": "1552",
+			"name": "mayumi",
+			"capture_rate": "60",
+			"gif_href": "http://en.tpdpwiki.net/w/images/c/c1/Shard_of_Dreams_-_Extended_-_Mayumi.gif"
+		},
+		{
+			"id": "1556",
+			"name": "keiki",
+			"capture_rate": "25",
+			"gif_href": "http://en.tpdpwiki.net/w/images/7/70/Shard_of_Dreams_-_Extended_-_Keiki.gif"
+		},
+		{
+			"id": "1560",
+			"name": "saki",
+			"capture_rate": "3",
+			"gif_href": "http://en.tpdpwiki.net/w/images/3/35/Shard_of_Dreams_-_Extended_-_Saki.gif"
+		},
+		{
+			"id": "1564",
+			"name": "miyoi",
+			"capture_rate": "200",
+			"gif_href": "http://en.tpdpwiki.net/w/images/6/6e/Shard_of_Dreams_-_Extended_-_Miyoi.gif"
+		}
+	]
+}
